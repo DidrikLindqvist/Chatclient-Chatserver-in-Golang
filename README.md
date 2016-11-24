@@ -1,7 +1,7 @@
 # Chatclient & Chatserver in Golang
 
 ## 1 Introduction
-Simple chatserver and client written in Golang. I did this because I had some time over from school and I wanted to try a new programming language. I had read alot of good stuff about Go, mostly about web applications.
+Simple chatserver and client written in Golang. I did this because I had some time over from school and I wanted to try a new programming language.
 
 ## 1.1 Example
 ![alt tag](https://s21.postimg.org/gui0exoh3/client1.png)
