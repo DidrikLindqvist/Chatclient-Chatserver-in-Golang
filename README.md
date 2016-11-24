@@ -22,12 +22,13 @@ git clone https://github.com/DidrikLindqvist/Chatclient-Chatserver-in-Golang
 ```
 ## 3 Usage
 ### Chatclient
+Exit with -1
 ```
 $ run ./chatclient.go
 ```
 
 ### Chatserver
-
+Exit with pressing enter.
 ```
 $ run ./chatserver.go
 ```
