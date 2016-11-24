@@ -15,6 +15,11 @@ sudo add-apt-repository ppa:ubuntu-lxc/lxd-stable
 sudo apt-get update
 sudo apt-get install golang
 ```
+
+Clone repo
+```
+git clone https://github.com/DidrikLindqvist/Chatclient-Chatserver-in-Golang
+```
 ## 3 Usage
 ### Chatclient
 ```
