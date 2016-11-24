@@ -57,10 +57,10 @@ func accpetNewClients(l net.Listener) {
 	// Waiting for new connection. If new it starts a goroutine for the client.
 	for {
 		conn, err := l.Accept()
-		fmt.Println("[Server] : Accepted")
 		if err != nil {
 			fmt.Println("[Server] : Error",err)
 		}else{
+			fmt.Println("[Server] : New client accepted")
 			clients = append(clients, conn)
 			go echoToClients(conn)
 		}
