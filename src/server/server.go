@@ -7,6 +7,9 @@ import (
 )
 var clients []net.Conn
 
+var server_ip string = "127.0.0.1"
+var server_port string = "8080"
+
 func deleteClosedConn(conn net.Conn) {
 	for i := 0 ; i <= len(clients) ; i++ {
 		if(conn == clients[i]) {
@@ -33,8 +36,9 @@ func echoToClients(conn net.Conn) {
 	}
 }
 func initServer() (net.Listener){
-	// Listen on TCP port 2000 on all interfaces.
-	l, err := net.Listen("tcp", "127.0.0.1:8080")
+	ip := server_ip + ":"+ server_port
+
+	l, err := net.Listen("tcp", ip)
 	if err != nil {
 		fmt.Println("[Server] : Error  : ",err)
 	}
@@ -53,7 +57,6 @@ func accpetNewClients(l net.Listener) {
 		}
 		clients = append(clients, conn)
 		go echoToClients(conn)
-
 	}
 }
 

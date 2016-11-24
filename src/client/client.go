@@ -10,6 +10,9 @@ import (
 	"os"
 )
 
+var server_ip string = "127.0.0.1"
+var server_port string = "8080"
+
 func initConnection(host string) (net.Conn,error){
 	c , err := net.Dial("tcp", host)
 	if err != nil {
@@ -63,7 +66,7 @@ func setNickName() (string) {
 func main() {
 
 	var wg sync.WaitGroup
-	ip := "127.0.0.1:8080"
+	ip := server_ip + ":"+ server_port
 	conn, err := initConnection(ip)
 	fmt.Println("Welcome to the chatclient, exit chat with -1")
 	if(err != nil) {
