@@ -36,6 +36,7 @@ func echoToClients(conn net.Conn) {
 		for _, conn := range clients {				
 			socket.SendMsg(conn,msg)
 		}
+	}
 		
 }
 

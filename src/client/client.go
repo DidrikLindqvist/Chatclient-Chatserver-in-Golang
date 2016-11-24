@@ -18,7 +18,7 @@ func initConnection() (net.Conn,error){
 	ip := server_ip + ":"+ server_port
 	
 	// Connects to the chatserver using TCP.
-	c , err := net.Dial("tcp", host)
+	c , err := net.Dial("tcp", ip)
 	if err != nil {
 		fmt.Println("[Client] : Error : ",err)
 	}else{
