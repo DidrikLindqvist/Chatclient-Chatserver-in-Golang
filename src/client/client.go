@@ -9,11 +9,15 @@ import (
 	"bufio"
 	"os"
 )
-
+// Changes these to match the server ip and port.
 var server_ip string = "127.0.0.1"
 var server_port string = "8080"
 
-func initConnection(host string) (net.Conn,error){
+func initConnection() (net.Conn,error){
+	
+	ip := server_ip + ":"+ server_port
+	
+	// Connects to the chatserver using TCP.
 	c , err := net.Dial("tcp", host)
 	if err != nil {
 		fmt.Println("[Client] : Error : ",err)
@@ -24,19 +28,21 @@ func initConnection(host string) (net.Conn,error){
 }
 func clientRead(conn net.Conn , nickname string) {
 	for {
+		// Reads any msg from chatserver.
 		msg , err:= socket.ReadMsg(conn)
 		if(err != nil) {
 			fmt.Println("Lost connection with chatserver")
 			break;
 		}
+		// Displays the message from chatserver to client.
 		fmt.Print("[" + msg.Nickname + "] : " + msg.Message)
-		//fmt.Print("[You] : ")
 	}
 }
 
 func clientSend(conn net.Conn, wg *sync.WaitGroup, nickname string) {
 	socket.SendMsg(conn, socket.TCP_Message{nickname,"Joined the chat.\n"})
 	reader := bufio.NewReader(os.Stdin)
+	// Loop until user writes "-1".
 	for {
 
 	  	var msg socket.TCP_Message
@@ -47,13 +53,14 @@ func clientSend(conn net.Conn, wg *sync.WaitGroup, nickname string) {
 		if(err != nil) {
 			fmt.Println("Stdin error ", err)
 		}
+
 		if(msg.Message[0] == '-' && msg.Message[1] == '1') {
 			fmt.Println("Exiting chatsession.")
 			socket.SendMsg(conn, socket.TCP_Message{nickname,"Leaved the chat."})
 			break
 		}
+		// Sends msg to chatserver.
 		socket.SendMsg(conn, msg)
-		//socket.WriteToSocket(conn,nickname+input)
 	}
 	wg.Done()
 }
@@ -66,18 +73,18 @@ func setNickName() (string) {
 func main() {
 
 	var wg sync.WaitGroup
-	ip := server_ip + ":"+ server_port
-	conn, err := initConnection(ip)
+	// Inits the connection to the chatserver.
+	conn, err := initConnection()
 	fmt.Println("Welcome to the chatclient, exit chat with -1")
 	if(err != nil) {
 		fmt.Println("Error whith connection to host msg : ,",err)
 	}else {
 		wg.Add(1)
-		//temporary
 		nickname := setNickName()
+		// Starts the goroutine for reading/sending from/to chatserver.
 		go clientRead(conn,nickname)
 		go clientSend(conn,&wg,nickname)
 	}
-	
+	// Waiting for goroutine to be done.
 	wg.Wait()
 }
